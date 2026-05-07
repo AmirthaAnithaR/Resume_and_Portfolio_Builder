@@ -1,8 +1,13 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import init_db_v2, get_data, save_data, update_data, email_exists, create_user, authenticate_user, log_login_activity
 
 app = Flask(__name__)
-app.secret_key = 'your-secret-key-change-this-in-production'
+app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
+
+# Initialize DB at import time so it runs on Vercel's serverless environment
+# (the __main__ block never executes in a WSGI/serverless context)
+init_db_v2()
 
 @app.route("/", methods=["GET"])
 def index():

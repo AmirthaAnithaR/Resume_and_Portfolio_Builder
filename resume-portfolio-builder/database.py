@@ -22,7 +22,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # ---------------------------------------------------------------------------
 
 # Path to the SQLite database file (created automatically if it doesn't exist)
-DB_PATH = os.path.join(os.path.dirname(__file__), "resume_portfolio.db")
+# On Vercel (serverless), the app directory is read-only — use /tmp instead.
+# Locally, fall back to the app directory.
+_app_dir = os.path.dirname(__file__)
+_tmp_dir = "/tmp"
+DB_PATH = os.path.join(
+    _tmp_dir if os.path.isdir(_tmp_dir) and not os.access(_app_dir, os.W_OK) else _app_dir,
+    "resume_portfolio.db"
+)
 
 
 # ---------------------------------------------------------------------------
