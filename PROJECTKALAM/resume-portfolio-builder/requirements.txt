@@ -1,0 +1,7 @@
+# requirements.txt — Resume + Portfolio Builder
+# Install with: pip install -r requirements.txt
+#
+# Only one external dependency needed.
+# All other libraries (sqlite3, os) are part of Python's standard library.
+
+Flask==3.0.3

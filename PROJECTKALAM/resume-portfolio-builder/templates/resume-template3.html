@@ -1,0 +1,164 @@
+<!-- Template 3: Modern Two-Column with Teal Header -->
+<div class="resume-template template3">
+    <!-- Teal Header with Photo Area -->
+    <div class="resume-header-teal">
+        <div class="photo-circle"></div>
+        <div class="header-text">
+            <h1 class="resume-name-teal">{{ profile.name.split()[0] if profile.name else 'First' }}</h1>
+            <h1 class="resume-surname-teal">{{ profile.name.split()[-1] if profile.name else 'Last' }}</h1>
+        </div>
+        <div class="job-title-teal">PROFESSIONAL</div>
+    </div>
+
+    <!-- Two Column Layout -->
+    <div class="resume-body-teal">
+        <!-- Left Column -->
+        <div class="left-column-teal">
+            <!-- Contact -->
+            <div class="section-teal">
+                <h2 class="section-title-teal">CONTACT</h2>
+                <div class="contact-item-teal">
+                    <span class="icon">✉</span>
+                    <span>{{ profile.email }}</span>
+                </div>
+                <div class="contact-item-teal">
+                    <span class="icon">📞</span>
+                    <span>{{ profile.phone }}</span>
+                </div>
+                {% if profile.linkedin_url %}
+                <div class="contact-item-teal">
+                    <span class="icon">💼</span>
+                    <span>LinkedIn</span>
+                </div>
+                {% endif %}
+                {% if profile.github_url %}
+                <div class="contact-item-teal">
+                    <span class="icon">💻</span>
+                    <span>GitHub</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Profile Summary -->
+            <div class="section-teal">
+                <h2 class="section-title-teal">PROFILE</h2>
+                <p class="profile-text">
+                    Professional with strong background in project management and technical expertise. 
+                    Proven track record in delivering successful outcomes and driving organizational growth.
+                </p>
+            </div>
+
+            <!-- Skills -->
+            {% if profile.skills %}
+            <div class="section-teal">
+                <h2 class="section-title-teal">SKILLS</h2>
+                <ul class="skills-list-teal">
+                    {% for skill in profile.skills.replace('\n', ',').split(',')[:6] %}
+                        {% if skill.strip() %}
+                        <li>✓ {{ skill.strip() }}</li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+
+            <!-- Languages -->
+            <div class="section-teal">
+                <h2 class="section-title-teal">LANGUAGES</h2>
+                <ul class="skills-list-teal">
+                    <li>✓ English: Native</li>
+                    <li>✓ Spanish: Intermediate</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="right-column-teal">
+            <!-- Professional Experience / Projects -->
+            <div class="section-teal-right">
+                <h2 class="section-title-teal-right">EXPERIENCE</h2>
+                
+                {% if profile.project1_title and profile.project1_desc %}
+                <div class="experience-item-teal">
+                    <h3 class="company-name-teal">{{ profile.project1_title.upper() }}</h3>
+                    <p class="job-title-small">Project Lead</p>
+                    <p class="date-location">2024 - Present</p>
+                    <ul class="experience-list">
+                        <li>{{ profile.project1_desc }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if profile.project2_title and profile.project2_desc %}
+                <div class="experience-item-teal">
+                    <h3 class="company-name-teal">{{ profile.project2_title.upper() }}</h3>
+                    <p class="job-title-small">Team Member</p>
+                    <p class="date-location">2023 - 2024</p>
+                    <ul class="experience-list">
+                        <li>{{ profile.project2_desc }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+
+                {% if profile.project3_title and profile.project3_desc %}
+                <div class="experience-item-teal">
+                    <h3 class="company-name-teal">{{ profile.project3_title.upper() }}</h3>
+                    <p class="job-title-small">Contributor</p>
+                    <p class="date-location">2022 - 2023</p>
+                    <ul class="experience-list">
+                        <li>{{ profile.project3_desc }}</li>
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Education -->
+            {% if profile.education %}
+            <div class="section-teal-right">
+                <h2 class="section-title-teal-right">EDUCATION</h2>
+                <div class="education-item-teal">
+                    <h3 class="degree-name-teal">{{ profile.education }}</h3>
+                    <p class="date-location">2020 - 2024</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Certifications -->
+            {% if profile.cert1_name or profile.cert2_name or profile.cert3_name %}
+            <div class="section-teal-right">
+                <h2 class="section-title-teal-right">CERTIFICATIONS</h2>
+                
+                {% if profile.cert1_name %}
+                <div class="education-item-teal">
+                    <h3 class="degree-name-teal">{{ profile.cert1_name }}</h3>
+                    {% if profile.cert1_org %}
+                    <p class="university-name">{{ profile.cert1_org }}</p>
+                    {% endif %}
+                    <p class="date-location">{{ profile.cert1_year or '2024' }}</p>
+                </div>
+                {% endif %}
+
+                {% if profile.cert2_name %}
+                <div class="education-item-teal">
+                    <h3 class="degree-name-teal">{{ profile.cert2_name }}</h3>
+                    {% if profile.cert2_org %}
+                    <p class="university-name">{{ profile.cert2_org }}</p>
+                    {% endif %}
+                    <p class="date-location">{{ profile.cert2_year or '2023' }}</p>
+                </div>
+                {% endif %}
+
+                {% if profile.cert3_name %}
+                <div class="education-item-teal">
+                    <h3 class="degree-name-teal">{{ profile.cert3_name }}</h3>
+                    {% if profile.cert3_org %}
+                    <p class="university-name">{{ profile.cert3_org }}</p>
+                    {% endif %}
+                    <p class="date-location">{{ profile.cert3_year or '2022' }}</p>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>

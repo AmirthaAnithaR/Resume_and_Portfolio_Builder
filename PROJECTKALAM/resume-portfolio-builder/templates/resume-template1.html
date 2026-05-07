@@ -1,0 +1,100 @@
+<!-- Template 1: Corporate Professional (ATS-Friendly) -->
+<div class="resume-template template1">
+    <div class="resume-header">
+        <h1 class="resume-name">{{ profile.name }}</h1>
+        <div class="resume-contact">
+            {% if profile.email %}<span class="contact-item">{{ profile.email }}</span>{% endif %}
+            {% if profile.phone %}<span class="contact-item">{{ profile.phone }}</span>{% endif %}
+            {% if profile.github_url %}<span class="contact-item"><a href="{{ profile.github_url }}" target="_blank">GitHub</a></span>{% endif %}
+            {% if profile.linkedin_url %}<span class="contact-item"><a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn</a></span>{% endif %}
+        </div>
+    </div>
+
+    {% if profile.education %}
+    <div class="resume-section">
+        <h2 class="section-title">Education</h2>
+        <div class="section-content">
+            <p class="education-text">{{ profile.education }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if profile.skills %}
+    <div class="resume-section">
+        <h2 class="section-title">Skills</h2>
+        <div class="section-content">
+            <p class="skills-list">{{ profile.skills }}</p>
+        </div>
+    </div>
+    {% endif %}
+
+    {% set has_projects = profile.project1_title or profile.project2_title or profile.project3_title %}
+    {% if has_projects %}
+    <div class="resume-section">
+        <h2 class="section-title">Projects</h2>
+        <div class="section-content">
+            {% if profile.project1_title and profile.project1_desc %}
+            <div class="project-item">
+                <h3 class="project-title">{{ profile.project1_title }}</h3>
+                <p class="project-desc">{{ profile.project1_desc }}</p>
+                {% if profile.project1_url %}
+                <p class="project-link"><a href="{{ profile.project1_url }}" target="_blank">{{ profile.project1_url }}</a></p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if profile.project2_title and profile.project2_desc %}
+            <div class="project-item">
+                <h3 class="project-title">{{ profile.project2_title }}</h3>
+                <p class="project-desc">{{ profile.project2_desc }}</p>
+                {% if profile.project2_url %}
+                <p class="project-link"><a href="{{ profile.project2_url }}" target="_blank">{{ profile.project2_url }}</a></p>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            {% if profile.project3_title and profile.project3_desc %}
+            <div class="project-item">
+                <h3 class="project-title">{{ profile.project3_title }}</h3>
+                <p class="project-desc">{{ profile.project3_desc }}</p>
+                {% if profile.project3_url %}
+                <p class="project-link"><a href="{{ profile.project3_url }}" target="_blank">{{ profile.project3_url }}</a></p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% set has_certs = profile.cert1_name or profile.cert2_name or profile.cert3_name %}
+    {% if has_certs %}
+    <div class="resume-section">
+        <h2 class="section-title">Certifications</h2>
+        <div class="section-content">
+            {% if profile.cert1_name %}
+            <div class="cert-item">
+                <strong>{{ profile.cert1_name }}</strong>
+                {% if profile.cert1_org %} - {{ profile.cert1_org }}{% endif %}
+                {% if profile.cert1_year %} ({{ profile.cert1_year }}){% endif %}
+            </div>
+            {% endif %}
+
+            {% if profile.cert2_name %}
+            <div class="cert-item">
+                <strong>{{ profile.cert2_name }}</strong>
+                {% if profile.cert2_org %} - {{ profile.cert2_org }}{% endif %}
+                {% if profile.cert2_year %} ({{ profile.cert2_year }}){% endif %}
+            </div>
+            {% endif %}
+
+            {% if profile.cert3_name %}
+            <div class="cert-item">
+                <strong>{{ profile.cert3_name }}</strong>
+                {% if profile.cert3_org %} - {{ profile.cert3_org }}{% endif %}
+                {% if profile.cert3_year %} ({{ profile.cert3_year }}){% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>

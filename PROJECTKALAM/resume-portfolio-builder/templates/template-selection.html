@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Your Template - My CV Creator{% endblock %}
+
+{% block content %}
+<div class="template-selection-page">
+    <div class="selection-container">
+        <h1 class="page-title">Choose Your Resume Template</h1>
+        <p class="page-subtitle">Select a template that best represents your professional style</p>
+
+        <div class="templates-grid">
+            <!-- Template 1: Corporate Professional -->
+            <div class="template-card" data-template="template1">
+                <div class="template-preview">
+                    <div class="preview-badge">ATS-Friendly</div>
+                    <div class="template-thumbnail template1-thumb">
+                        <div class="thumb-header"></div>
+                        <div class="thumb-line"></div>
+                        <div class="thumb-line short"></div>
+                        <div class="thumb-section"></div>
+                        <div class="thumb-line"></div>
+                        <div class="thumb-line"></div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Corporate Professional</h3>
+                    <p>Clean, conservative design perfect for traditional industries. ATS-optimized for maximum compatibility.</p>
+                    <ul class="template-features">
+                        <li>✓ Single-column layout</li>
+                        <li>✓ Professional typography</li>
+                        <li>✓ ATS-compatible</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="previewTemplate('template1')">Preview</button>
+                    <button class="btn btn-primary" onclick="selectTemplate('template1')">Use This Template</button>
+                </div>
+            </div>
+
+            <!-- Template 2: Modern Professional with Timeline -->
+            <div class="template-card" data-template="template2">
+                <div class="template-preview">
+                    <div class="preview-badge popular">Most Popular</div>
+                    <div class="template-thumbnail template2-thumb">
+                        <div class="thumb-header"></div>
+                        <div class="thumb-badges">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="thumb-cards">
+                            <div class="thumb-card"></div>
+                            <div class="thumb-card"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Modern Professional Timeline</h3>
+                    <p>Clean timeline design with mint green accents. Perfect for professionals with strong work history.</p>
+                    <ul class="template-features">
+                        <li>✓ Timeline layout</li>
+                        <li>✓ Mint green accents</li>
+                        <li>✓ Professional structure</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="previewTemplate('template2')">Preview</button>
+                    <button class="btn btn-primary" onclick="selectTemplate('template2')">Use This Template</button>
+                </div>
+            </div>
+
+            <!-- Template 3: Modern Two-Column -->
+            <div class="template-card" data-template="template3">
+                <div class="template-preview">
+                    <div class="preview-badge creative">Creative</div>
+                    <div class="template-thumbnail template3-thumb">
+                        <div class="thumb-header creative"></div>
+                        <div class="thumb-grid">
+                            <div class="thumb-box"></div>
+                            <div class="thumb-box"></div>
+                            <div class="thumb-box"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-info">
+                    <h3>Modern Two-Column Design</h3>
+                    <p>Eye-catching two-column layout with teal header and photo area. Stand out from the crowd.</p>
+                    <ul class="template-features">
+                        <li>✓ Two-column layout</li>
+                        <li>✓ Teal header design</li>
+                        <li>✓ Photo placeholder</li>
+                    </ul>
+                    <button class="btn btn-outline" onclick="previewTemplate('template3')">Preview</button>
+                    <button class="btn btn-primary" onclick="selectTemplate('template3')">Use This Template</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal" id="previewModal">
+    <div class="modal-overlay" onclick="closePreview()"></div>
+    <div class="modal-content">
+        <button class="modal-close" onclick="closePreview()">&times;</button>
+        <div class="modal-header">
+            <h2 id="previewTitle">Template Preview</h2>
+        </div>
+        <div class="modal-body" id="previewContent">
+            <!-- Preview content will be loaded here -->
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closePreview()">Close</button>
+            <button class="btn btn-primary" id="useTemplateBtn">Use This Template</button>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden form for template selection -->
+<form id="templateForm" action="/save-template" method="POST" style="display: none;">
+    <input type="hidden" name="template_choice" id="templateChoice">
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/template-preview.js') }}"></script>
+<script>
+    // Pass profile data to JavaScript
+    window.profileData = {{ profile | tojson | safe }};
+</script>
+{% endblock %}

@@ -1,0 +1,278 @@
+{% extends "base.html" %}
+
+{% block title %}{% if profile %}Edit Your Details{% else %}Create Your CV{% endif %} - My CV Creator{% endblock %}
+
+{% block content %}
+<div class="form-page">
+    <div class="form-container">
+        <h1 class="form-page-title">
+            {% if profile %}Edit Your Details{% else %}Create Your Professional CV{% endif %}
+        </h1>
+        
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Personal</div>
+                </div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Education</div>
+                </div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Skills</div>
+                </div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Projects</div>
+                </div>
+                <div class="progress-step" data-step="5">
+                    <div class="step-circle">5</div>
+                    <div class="step-label">Certifications</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Multi-Step Form -->
+        <form id="profile-form" action="/save-simple" method="POST" novalidate>
+            
+            <!-- Step 1: Personal Information -->
+            <div class="form-step active" data-step="1">
+                <h2 class="step-title">Personal Information</h2>
+                
+                <div class="form-group">
+                    <label for="name">Full Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" value="{{ profile.name if profile else '' }}" 
+                           placeholder="e.g. John Doe" required>
+                    <span class="error-msg" id="name-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" value="{{ profile.email if profile else '' }}" 
+                           placeholder="e.g. john@example.com" required>
+                    <span class="error-msg" id="email-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number <span class="required">*</span></label>
+                    <input type="tel" id="phone" name="phone" value="{{ profile.phone if profile else '' }}" 
+                           placeholder="e.g. +1-234-567-8900" required>
+                    <span class="error-msg" id="phone-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="github_url">GitHub Profile URL <span class="optional">(optional)</span></label>
+                    <input type="url" id="github_url" name="github_url" value="{{ profile.github_url or '' }}" 
+                           placeholder="https://github.com/yourusername">
+                    <span class="error-msg" id="github-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="linkedin_url">LinkedIn Profile URL <span class="optional">(optional)</span></label>
+                    <input type="url" id="linkedin_url" name="linkedin_url" value="{{ profile.linkedin_url or '' }}" 
+                           placeholder="https://linkedin.com/in/yourprofile">
+                    <span class="error-msg" id="linkedin-error"></span>
+                </div>
+            </div>
+
+            <!-- Step 2: Education -->
+            <div class="form-step" data-step="2">
+                <h2 class="step-title">Education</h2>
+                
+                <div class="form-group">
+                    <label for="education">Education Details <span class="required">*</span></label>
+                    <textarea id="education" name="education" rows="5" required
+                              placeholder="e.g. BS Computer Science, University Name, 2024">{{ profile.education if profile else '' }}</textarea>
+                    <span class="error-msg" id="education-error"></span>
+                    <small class="form-hint">Enter your degree, institution, and graduation year</small>
+                </div>
+            </div>
+
+            <!-- Step 3: Skills -->
+            <div class="form-step" data-step="3">
+                <h2 class="step-title">Skills</h2>
+                
+                <div class="form-group">
+                    <label for="skills">Your Skills <span class="required">*</span></label>
+                    <textarea id="skills" name="skills" rows="4" required
+                              placeholder="e.g. Python, JavaScript, React, SQL, Git">{{ profile.skills if profile else '' }}</textarea>
+                    <span class="error-msg" id="skills-error"></span>
+                    <small class="form-hint">Separate skills with commas or new lines</small>
+                </div>
+            </div>
+
+            <!-- Step 4: Projects -->
+            <div class="form-step" data-step="4">
+                <h2 class="step-title">Projects</h2>
+                <p class="step-description">Add at least one project. You can add up to 3 projects.</p>
+                
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <h3>Project 1 <span class="required">*</span></h3>
+                    <div class="form-group">
+                        <label for="project1_title">Project Title <span class="required">*</span></label>
+                        <input type="text" id="project1_title" name="project1_title" 
+                               value="{{ profile.project1_title or '' }}" placeholder="e.g. E-commerce Website" required>
+                        <span class="error-msg" id="project1-title-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="project1_desc">Description <span class="required">*</span></label>
+                        <textarea id="project1_desc" name="project1_desc" rows="3" required
+                                  placeholder="Brief description of the project">{{ profile.project1_desc or '' }}</textarea>
+                        <span class="error-msg" id="project1-desc-error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="project1_url">Project URL <span class="optional">(optional)</span></label>
+                        <input type="url" id="project1_url" name="project1_url" 
+                               value="{{ profile.project1_url or '' }}" placeholder="https://github.com/you/project">
+                        <span class="error-msg" id="project1-url-error"></span>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <h3>Project 2 <span class="optional">(optional)</span></h3>
+                    <div class="form-group">
+                        <label for="project2_title">Project Title</label>
+                        <input type="text" id="project2_title" name="project2_title" 
+                               value="{{ profile.project2_title or '' }}" placeholder="e.g. Mobile App">
+                    </div>
+                    <div class="form-group">
+                        <label for="project2_desc">Description</label>
+                        <textarea id="project2_desc" name="project2_desc" rows="3"
+                                  placeholder="Brief description of the project">{{ profile.project2_desc or '' }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project2_url">Project URL <span class="optional">(optional)</span></label>
+                        <input type="url" id="project2_url" name="project2_url" 
+                               value="{{ profile.project2_url or '' }}" placeholder="https://github.com/you/project">
+                        <span class="error-msg" id="project2-url-error"></span>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <h3>Project 3 <span class="optional">(optional)</span></h3>
+                    <div class="form-group">
+                        <label for="project3_title">Project Title</label>
+                        <input type="text" id="project3_title" name="project3_title" 
+                               value="{{ profile.project3_title or '' }}" placeholder="e.g. Portfolio Website">
+                    </div>
+                    <div class="form-group">
+                        <label for="project3_desc">Description</label>
+                        <textarea id="project3_desc" name="project3_desc" rows="3"
+                                  placeholder="Brief description of the project">{{ profile.project3_desc or '' }}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="project3_url">Project URL <span class="optional">(optional)</span></label>
+                        <input type="url" id="project3_url" name="project3_url" 
+                               value="{{ profile.project3_url or '' }}" placeholder="https://github.com/you/project">
+                        <span class="error-msg" id="project3-url-error"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 5: Certifications -->
+            <div class="form-step" data-step="5">
+                <h2 class="step-title">Certifications</h2>
+                <p class="step-description">Add your certifications (optional)</p>
+                
+                <!-- Certification 1 -->
+                <div class="cert-card">
+                    <h3>Certification 1</h3>
+                    <div class="form-group">
+                        <label for="cert1_name">Certification Name</label>
+                        <input type="text" id="cert1_name" name="cert1_name" 
+                               value="{{ profile.cert1_name or '' }}" placeholder="e.g. AWS Certified Developer">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cert1_org">Issuing Organization</label>
+                            <input type="text" id="cert1_org" name="cert1_org" 
+                                   value="{{ profile.cert1_org or '' }}" placeholder="e.g. Amazon Web Services">
+                        </div>
+                        <div class="form-group">
+                            <label for="cert1_year">Year</label>
+                            <input type="text" id="cert1_year" name="cert1_year" 
+                                   value="{{ profile.cert1_year or '' }}" placeholder="e.g. 2024">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certification 2 -->
+                <div class="cert-card">
+                    <h3>Certification 2</h3>
+                    <div class="form-group">
+                        <label for="cert2_name">Certification Name</label>
+                        <input type="text" id="cert2_name" name="cert2_name" 
+                               value="{{ profile.cert2_name or '' }}" placeholder="e.g. Google Analytics">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cert2_org">Issuing Organization</label>
+                            <input type="text" id="cert2_org" name="cert2_org" 
+                                   value="{{ profile.cert2_org or '' }}" placeholder="e.g. Google">
+                        </div>
+                        <div class="form-group">
+                            <label for="cert2_year">Year</label>
+                            <input type="text" id="cert2_year" name="cert2_year" 
+                                   value="{{ profile.cert2_year or '' }}" placeholder="e.g. 2023">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certification 3 -->
+                <div class="cert-card">
+                    <h3>Certification 3</h3>
+                    <div class="form-group">
+                        <label for="cert3_name">Certification Name</label>
+                        <input type="text" id="cert3_name" name="cert3_name" 
+                               value="{{ profile.cert3_name or '' }}" placeholder="e.g. Python Certification">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cert3_org">Issuing Organization</label>
+                            <input type="text" id="cert3_org" name="cert3_org" 
+                                   value="{{ profile.cert3_org or '' }}" placeholder="e.g. Coursera">
+                        </div>
+                        <div class="form-group">
+                            <label for="cert3_year">Year</label>
+                            <input type="text" id="cert3_year" name="cert3_year" 
+                                   value="{{ profile.cert3_year or '' }}" placeholder="e.g. 2023">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="form-navigation">
+                <button type="button" class="btn btn-secondary" id="prevBtn" style="display: none;">
+                    ← Previous
+                </button>
+                <button type="button" class="btn btn-primary" id="nextBtn">
+                    Next →
+                </button>
+                <button type="submit" class="btn btn-primary" id="submitBtn" style="display: none;">
+                    Submit & Choose Template
+                </button>
+            </div>
+        </form>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner" style="display: none;">
+            <div class="spinner"></div>
+            <p>Saving your information...</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/form-wizard.js') }}?v=2"></script>
+{% endblock %}

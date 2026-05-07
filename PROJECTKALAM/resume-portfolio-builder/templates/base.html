@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My CV Creator{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/print.css') }}" media="print">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <a href="/">My CV Creator</a>
+            </div>
+            
+            <!-- Hamburger Menu Icon -->
+            <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            
+            <!-- Navigation Links -->
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="/" class="{% if current_page == 'landing' %}active{% endif %}">Home</a></li>
+                {% if session.get('logged_in') %}
+                {% if profile_exists %}
+                <li><a href="/portfolio" class="{% if current_page == 'portfolio' %}active{% endif %}">Portfolio</a></li>
+                <li><a href="/form" class="{% if current_page == 'form' %}active{% endif %}">Edit</a></li>
+                {% endif %}
+                <li><a href="/logout" class="logout-link">Logout</a></li>
+                {% else %}
+                <li><a href="/login" class="{% if current_page == 'login' %}active{% endif %}">Login</a></li>
+                <li><a href="/register" class="{% if current_page == 'register' %}active{% endif %}">Register</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <p>&copy; 2026 My CV Creator. Create compelling CVs with AI assistance.</p>
+        </div>
+    </footer>
+
+    <!-- Base Scripts -->
+    <script>
+        // Mobile Navigation Toggle
+        const navToggle = document.getElementById('navToggle');
+        const navMenu = document.getElementById('navMenu');
+        
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                navMenu.classList.toggle('active');
+                navToggle.classList.toggle('active');
+            });
+        }
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!navToggle.contains(e.target) && !navMenu.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>
