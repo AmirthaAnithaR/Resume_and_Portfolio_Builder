@@ -2,7 +2,16 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, session
 from database import init_db_v2, get_data, save_data, update_data, email_exists, create_user, authenticate_user, log_login_activity
 
-app = Flask(__name__)
+# Use the directory of this file as the root for templates and static assets.
+# This ensures Flask finds them correctly whether run directly or imported
+# from a parent directory (e.g. Vercel's api/index.py entry point).
+_base_dir = os.path.dirname(os.path.abspath(__file__))
+
+app = Flask(
+    __name__,
+    template_folder=os.path.join(_base_dir, 'templates'),
+    static_folder=os.path.join(_base_dir, 'static'),
+)
 app.secret_key = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-in-production')
 
 # Initialize DB at import time so it runs on Vercel's serverless environment
