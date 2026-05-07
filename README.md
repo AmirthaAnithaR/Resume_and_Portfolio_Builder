@@ -8,7 +8,7 @@ Built with **Python / Flask**, **HTML / CSS / JavaScript**, and **SQLite**.
 
 ## Live Demo
 
-🚀 [View Live on Vercel](https://resume-and-portfolio-bu-git-c75930-anithaami1208-5035s-projects.vercel.app/)
+🚀 [View Live on Vercel](https://resume-and-portfolio-builder.vercel.app/)
 
 ---
 
