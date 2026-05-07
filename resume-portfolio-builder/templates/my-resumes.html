@@ -1,0 +1,326 @@
+{% extends "base.html" %}
+
+{% block title %}My Resumes - AI CV Builder{% endblock %}
+
+{% block content %}
+<div class="my-resumes-container">
+    <div class="dashboard-header">
+        <h1>My Resumes</h1>
+        <button class="btn btn-primary" onclick="openCreateModal()">
+            <i class="fas fa-plus"></i> Create New Resume
+        </button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('active')">
+            Active <span class="badge">{{ active_versions|length }}</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('archived')">
+            Archived <span class="badge">{{ archived_versions|length }}</span>
+        </button>
+        <button class="tab-btn" onclick="switchTab('trash')">
+            Trash <span class="badge">{{ deleted_versions|length }}</span>
+        </button>
+    </div>
+
+    <!-- Active Versions Tab -->
+    <div id="active-tab" class="tab-content active">
+        {% if active_versions|length == 0 %}
+        <div class="empty-state">
+            <i class="fas fa-file-alt fa-3x"></i>
+            <h3>No resumes yet</h3>
+            <p>Create your first resume to get started!</p>
+            <button class="btn btn-primary" onclick="openCreateModal()">Create Resume</button>
+        </div>
+        {% else %}
+        <div class="versions-grid">
+            {% for version in active_versions %}
+            <div class="version-card">
+                <div class="version-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-file-alt fa-3x"></i>
+                        <p>{{ version.template_choice|upper }}</p>
+                    </div>
+                </div>
+                <div class="version-info">
+                    <div class="version-header">
+                        <h3>{{ version.version_name }}</h3>
+                        {% if version.is_default == 1 %}
+                        <span class="badge badge-default">Default</span>
+                        {% endif %}
+                    </div>
+                    {% if version.description %}
+                    <p class="version-description">{{ version.description }}</p>
+                    {% endif %}
+                    {% if version.target_job %}
+                    <p class="version-target"><i class="fas fa-briefcase"></i> {{ version.target_job }}</p>
+                    {% endif %}
+                    <div class="version-meta">
+                        <span><i class="fas fa-calendar"></i> Created: {{ version.created_at[:10] }}</span>
+                        <span><i class="fas fa-clock"></i> Modified: {{ version.last_modified[:10] }}</span>
+                    </div>
+                </div>
+                <div class="version-actions">
+                    <a href="{{ url_for('view_version', version_id=version.id) }}" class="btn btn-sm btn-primary">
+                        <i class="fas fa-eye"></i> View
+                    </a>
+                    <a href="{{ url_for('form_version', version_id=version.id) }}" class="btn btn-sm btn-secondary">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+                    <button class="btn btn-sm btn-secondary" onclick="openCloneModal({{ version.id }}, '{{ version.version_name }}')">
+                        <i class="fas fa-copy"></i> Clone
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            {% if version.is_default != 1 %}
+                            <form method="POST" action="{{ url_for('set_default', version_id=version.id) }}" style="display:inline;">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-star"></i> Set as Default
+                                </button>
+                            </form>
+                            {% endif %}
+                            <form method="POST" action="{{ url_for('archive_version', version_id=version.id) }}" style="display:inline;">
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-archive"></i> Archive
+                                </button>
+                            </form>
+                            <form method="POST" action="{{ url_for('delete_version', version_id=version.id) }}" 
+                                  onsubmit="return confirm('Move this resume to trash?')" style="display:inline;">
+                                <button type="submit" class="dropdown-item text-danger">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Archived Versions Tab -->
+    <div id="archived-tab" class="tab-content">
+        {% if archived_versions|length == 0 %}
+        <div class="empty-state">
+            <i class="fas fa-archive fa-3x"></i>
+            <h3>No archived resumes</h3>
+            <p>Archived resumes will appear here.</p>
+        </div>
+        {% else %}
+        <div class="versions-grid">
+            {% for version in archived_versions %}
+            <div class="version-card archived">
+                <div class="version-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-file-alt fa-3x"></i>
+                        <p>{{ version.template_choice|upper }}</p>
+                    </div>
+                </div>
+                <div class="version-info">
+                    <h3>{{ version.version_name }}</h3>
+                    {% if version.description %}
+                    <p class="version-description">{{ version.description }}</p>
+                    {% endif %}
+                    <div class="version-meta">
+                        <span><i class="fas fa-calendar"></i> Created: {{ version.created_at[:10] }}</span>
+                    </div>
+                </div>
+                <div class="version-actions">
+                    <form method="POST" action="{{ url_for('unarchive_version', version_id=version.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="fas fa-undo"></i> Restore
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('delete_version', version_id=version.id) }}" 
+                          onsubmit="return confirm('Move this resume to trash?')" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Trash Tab -->
+    <div id="trash-tab" class="tab-content">
+        {% if deleted_versions|length == 0 %}
+        <div class="empty-state">
+            <i class="fas fa-trash-alt fa-3x"></i>
+            <h3>Trash is empty</h3>
+            <p>Deleted resumes will be kept here for 30 days.</p>
+        </div>
+        {% else %}
+        <div class="alert alert-warning">
+            <i class="fas fa-info-circle"></i> Items in trash will be permanently deleted after 30 days.
+        </div>
+        <div class="versions-grid">
+            {% for version in deleted_versions %}
+            <div class="version-card deleted">
+                <div class="version-preview">
+                    <div class="preview-placeholder">
+                        <i class="fas fa-file-alt fa-3x"></i>
+                        <p>{{ version.template_choice|upper }}</p>
+                    </div>
+                </div>
+                <div class="version-info">
+                    <h3>{{ version.version_name }}</h3>
+                    {% if version.description %}
+                    <p class="version-description">{{ version.description }}</p>
+                    {% endif %}
+                    <div class="version-meta">
+                        <span><i class="fas fa-trash"></i> Deleted: {{ version.deleted_at[:10] if version.deleted_at else 'Unknown' }}</span>
+                    </div>
+                </div>
+                <div class="version-actions">
+                    <form method="POST" action="{{ url_for('restore_version', version_id=version.id) }}" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-primary">
+                            <i class="fas fa-undo"></i> Restore
+                        </button>
+                    </form>
+                    <form method="POST" action="{{ url_for('permanently_delete_version', version_id=version.id) }}" 
+                          onsubmit="return confirm('Permanently delete this resume? This cannot be undone!')" style="display:inline;">
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            <i class="fas fa-times"></i> Delete Forever
+                        </button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Create New Resume Modal -->
+<div id="createModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Create New Resume</h2>
+            <span class="close" onclick="closeCreateModal()">&times;</span>
+        </div>
+        <form method="POST" action="{{ url_for('create_version') }}">
+            <div class="form-group">
+                <label for="version_name">Resume Name *</label>
+                <input type="text" id="version_name" name="version_name" class="form-control" 
+                       placeholder="e.g., Software Engineer Resume" required>
+            </div>
+            <div class="form-group">
+                <label for="description">Description (Optional)</label>
+                <textarea id="description" name="description" class="form-control" rows="3"
+                          placeholder="Brief description of this resume version"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="target_job">Target Job/Company (Optional)</label>
+                <input type="text" id="target_job" name="target_job" class="form-control" 
+                       placeholder="e.g., Senior Developer at Google">
+            </div>
+            <div class="form-group">
+                <label>Start From</label>
+                <select name="clone_from_id" class="form-control">
+                    <option value="">Blank Resume</option>
+                    {% for version in active_versions %}
+                    <option value="{{ version.id }}">Clone from: {{ version.version_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeCreateModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Create Resume</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Clone Resume Modal -->
+<div id="cloneModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Clone Resume</h2>
+            <span class="close" onclick="closeCloneModal()">&times;</span>
+        </div>
+        <form method="POST" action="{{ url_for('create_version') }}">
+            <input type="hidden" id="clone_version_id" name="clone_from_id">
+            <div class="form-group">
+                <label for="clone_version_name">New Resume Name *</label>
+                <input type="text" id="clone_version_name" name="version_name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="clone_description">Description (Optional)</label>
+                <textarea id="clone_description" name="description" class="form-control" rows="3"></textarea>
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-secondary" onclick="closeCloneModal()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Clone Resume</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// Tab switching
+function switchTab(tabName) {
+    // Hide all tabs
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    
+    // Show selected tab
+    document.getElementById(tabName + '-tab').classList.add('active');
+    event.target.classList.add('active');
+}
+
+// Create modal
+function openCreateModal() {
+    document.getElementById('createModal').style.display = 'block';
+}
+
+function closeCreateModal() {
+    document.getElementById('createModal').style.display = 'none';
+}
+
+// Clone modal
+function openCloneModal(versionId, versionName) {
+    document.getElementById('clone_version_id').value = versionId;
+    document.getElementById('clone_version_name').value = 'Copy of ' + versionName;
+    document.getElementById('cloneModal').style.display = 'block';
+}
+
+function closeCloneModal() {
+    document.getElementById('cloneModal').style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+    if (event.target.classList.contains('modal')) {
+        event.target.style.display = 'none';
+    }
+}
+
+// Dropdown toggle
+document.querySelectorAll('.dropdown-toggle').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = this.parentElement;
+        dropdown.classList.toggle('active');
+    });
+});
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', function() {
+    document.querySelectorAll('.dropdown').forEach(dropdown => {
+        dropdown.classList.remove('active');
+    });
+});
+</script>
+{% endblock %}

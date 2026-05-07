@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ profile.name }} - Digital Portfolio</title>
+    <style>
+        /* PDF-optimized styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: white;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .contact-info span {
+            margin: 0 15px;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .stats {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-item {
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            display: block;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .project-card {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            background: #f9f9f9;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .project-description {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+        }
+
+        .project-url {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.8rem;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-category {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .skill-item {
+            margin-bottom: 10px;
+        }
+
+        .skill-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .skill-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .contact-item h4 {
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+
+        .contact-item p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Print optimizations */
+        @media print {
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>{{ profile.name }}</h1>
+            <div class="subtitle">Creative Developer & Designer</div>
+            <div class="contact-info">
+                <span>📧 {{ profile.email }}</span>
+                {% if profile.phone %}<span>📱 {{ profile.phone }}</span>{% endif %}
+                {% if profile.github_url %}<span>🔗 GitHub</span>{% endif %}
+                {% if profile.linkedin_url %}<span>💼 LinkedIn</span>{% endif %}
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <div class="section">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>{{ profile.education if profile.education else 'Passionate developer with expertise in modern web technologies and software development. Committed to creating innovative solutions and delivering high-quality results.' }}</p>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">{{ (profile.project1_title and 1 or 0) + (profile.project2_title and 1 or 0) + (profile.project3_title and 1 or 0) }}+</span>
+                        <span class="stat-label">Projects</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ profile.skills.split(',') | length if profile.skills else '5' }}+</span>
+                        <span class="stat-label">Skills</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">{{ (profile.cert1_name and 1 or 0) + (profile.cert2_name and 1 or 0) + (profile.cert3_name and 1 or 0) }}+</span>
+                        <span class="stat-label">Certificates</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projects Section -->
+        {% set has_projects = profile.project1_title or profile.project2_title or profile.project3_title %}
+        {% if has_projects %}
+        <div class="section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                {% if profile.project1_title %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.project1_title }}</div>
+                    <div class="project-description">{{ profile.project1_desc }}</div>
+                    {% if profile.project1_url %}
+                    <a href="{{ profile.project1_url }}" class="project-url">{{ profile.project1_url }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if profile.project2_title %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.project2_title }}</div>
+                    <div class="project-description">{{ profile.project2_desc }}</div>
+                    {% if profile.project2_url %}
+                    <a href="{{ profile.project2_url }}" class="project-url">{{ profile.project2_url }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if profile.project3_title %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.project3_title }}</div>
+                    <div class="project-description">{{ profile.project3_desc }}</div>
+                    {% if profile.project3_url %}
+                    <a href="{{ profile.project3_url }}" class="project-url">{{ profile.project3_url }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Skills Section -->
+        {% if profile.skills %}
+        <div class="section">
+            <h2 class="section-title">Skills & Technologies</h2>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h3>Technical Skills</h3>
+                    {% set skills_list = profile.skills.replace('\n', ',').split(',') %}
+                    {% for skill in skills_list %}
+                        {% if skill.strip() %}
+                        <div class="skill-item">
+                            <div class="skill-name">{{ skill.strip() }}</div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: {{ 85 - loop.index0 * 5 }}%"></div>
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Certifications Section -->
+        {% set has_certs = profile.cert1_name or profile.cert2_name or profile.cert3_name %}
+        {% if has_certs %}
+        <div class="section">
+            <h2 class="section-title">Certifications</h2>
+            <div class="projects-grid">
+                {% if profile.cert1_name %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.cert1_name }}</div>
+                    <div class="project-description">
+                        {% if profile.cert1_org %}{{ profile.cert1_org }}{% endif %}
+                        {% if profile.cert1_year %} • {{ profile.cert1_year }}{% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if profile.cert2_name %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.cert2_name }}</div>
+                    <div class="project-description">
+                        {% if profile.cert2_org %}{{ profile.cert2_org }}{% endif %}
+                        {% if profile.cert2_year %} • {{ profile.cert2_year }}{% endif %}
+                    </div>
+                </div>
+                {% endif %}
+
+                {% if profile.cert3_name %}
+                <div class="project-card">
+                    <div class="project-title">{{ profile.cert3_name }}</div>
+                    <div class="project-description">
+                        {% if profile.cert3_org %}{{ profile.cert3_org }}{% endif %}
+                        {% if profile.cert3_year %} • {{ profile.cert3_year }}{% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Contact Section -->
+        <div class="section">
+            <h2 class="section-title">Contact Information</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <h4>Email</h4>
+                    <p>{{ profile.email }}</p>
+                </div>
+                {% if profile.phone %}
+                <div class="contact-item">
+                    <h4>Phone</h4>
+                    <p>{{ profile.phone }}</p>
+                </div>
+                {% endif %}
+                {% if profile.github_url %}
+                <div class="contact-item">
+                    <h4>GitHub</h4>
+                    <p>{{ profile.github_url }}</p>
+                </div>
+                {% endif %}
+                {% if profile.linkedin_url %}
+                <div class="contact-item">
+                    <h4>LinkedIn</h4>
+                    <p>{{ profile.linkedin_url }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2026 {{ profile.name }}. Digital Portfolio generated by My CV Creator.</p>
+        </div>
+    </div>
+</body>
+</html>

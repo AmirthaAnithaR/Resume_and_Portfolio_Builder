@@ -1,0 +1,158 @@
+<!-- Template 2: Modern Professional with Mint Green Timeline -->
+<div class="resume-template template2">
+    <!-- Header with mint green accent -->
+    <div class="resume-header-mint">
+        <div class="mint-accent"></div>
+        <div class="header-content">
+            <div class="job-title-badge">PROFESSIONAL</div>
+            <h1 class="resume-name">{{ profile.name }}</h1>
+            <p class="resume-tagline">Experienced professional with expertise in multiple domains</p>
+        </div>
+    </div>
+
+    <div class="resume-body-mint">
+        <!-- Contact Info -->
+        <div class="contact-section-mint">
+            <h3>EMAIL</h3>
+            <p>{{ profile.email }}</p>
+            
+            <h3>PHONE</h3>
+            <p>{{ profile.phone }}</p>
+            
+            {% if profile.linkedin_url %}
+            <h3>LINKEDIN</h3>
+            <p><a href="{{ profile.linkedin_url }}" target="_blank">LinkedIn Profile</a></p>
+            {% endif %}
+            
+            {% if profile.github_url %}
+            <h3>GITHUB</h3>
+            <p><a href="{{ profile.github_url }}" target="_blank">GitHub Profile</a></p>
+            {% endif %}
+        </div>
+
+        <!-- Work History / Projects -->
+        <div class="timeline-section">
+            <h2 class="section-title-mint">WORK HISTORY</h2>
+            
+            {% if profile.project1_title and profile.project1_desc %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.project1_title }}</h3>
+                    <p class="timeline-company">RECENT PROJECT</p>
+                    <p class="timeline-desc">{{ profile.project1_desc }}</p>
+                </div>
+                <div class="timeline-date">2024 - PRESENT</div>
+            </div>
+            {% endif %}
+
+            {% if profile.project2_title and profile.project2_desc %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.project2_title }}</h3>
+                    <p class="timeline-company">PREVIOUS PROJECT</p>
+                    <p class="timeline-desc">{{ profile.project2_desc }}</p>
+                </div>
+                <div class="timeline-date">2023 - 2024</div>
+            </div>
+            {% endif %}
+
+            {% if profile.project3_title and profile.project3_desc %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.project3_title }}</h3>
+                    <p class="timeline-company">EARLIER PROJECT</p>
+                    <p class="timeline-desc">{{ profile.project3_desc }}</p>
+                </div>
+                <div class="timeline-date">2022 - 2023</div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Education -->
+        {% if profile.education %}
+        <div class="timeline-section">
+            <h2 class="section-title-mint">EDUCATION</h2>
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.education }}</h3>
+                    <p class="timeline-company">ACADEMIC BACKGROUND</p>
+                </div>
+                <div class="timeline-date">2020 - 2024</div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Skills -->
+        {% if profile.skills %}
+        <div class="skills-section-mint">
+            <h2 class="section-title-mint">SKILLS</h2>
+            <ul class="skills-list-mint">
+                {% for skill in profile.skills.replace('\n', ',').split(',') %}
+                    {% if skill.strip() %}
+                    <li>{{ skill.strip() }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <!-- Languages -->
+        <div class="languages-section-mint">
+            <h2 class="section-title-mint">LANGUAGES</h2>
+            <div class="language-item">
+                <span>English</span>
+                <div class="stars">★★★★★</div>
+            </div>
+        </div>
+
+        <!-- Certificates -->
+        {% if profile.cert1_name or profile.cert2_name or profile.cert3_name %}
+        <div class="timeline-section">
+            <h2 class="section-title-mint">CERTIFICATES</h2>
+            
+            {% if profile.cert1_name %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.cert1_name }}</h3>
+                    {% if profile.cert1_org %}
+                    <p class="timeline-company">{{ profile.cert1_org }}</p>
+                    {% endif %}
+                </div>
+                <div class="timeline-date">{{ profile.cert1_year or '2024' }}</div>
+            </div>
+            {% endif %}
+
+            {% if profile.cert2_name %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.cert2_name }}</h3>
+                    {% if profile.cert2_org %}
+                    <p class="timeline-company">{{ profile.cert2_org }}</p>
+                    {% endif %}
+                </div>
+                <div class="timeline-date">{{ profile.cert2_year or '2023' }}</div>
+            </div>
+            {% endif %}
+
+            {% if profile.cert3_name %}
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <h3>{{ profile.cert3_name }}</h3>
+                    {% if profile.cert3_org %}
+                    <p class="timeline-company">{{ profile.cert3_org }}</p>
+                    {% endif %}
+                </div>
+                <div class="timeline-date">{{ profile.cert3_year or '2022' }}</div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>

@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Login - My CV Creator{% endblock %}
+
+{% block content %}
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <h1>Welcome Back</h1>
+                <p>Sign in to access your CV builder</p>
+            </div>
+
+            {% if error %}
+            <div class="alert alert-error">
+                {{ error }}
+            </div>
+            {% endif %}
+
+            <form method="POST" action="/login" class="login-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" required 
+                           placeholder="Enter your email address" value="{{ request.form.get('email', '') }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter your password">
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+                        <input type="checkbox" name="remember"> Remember me
+                    </label>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            </form>
+
+            <div class="login-footer">
+                <p>Don't have an account? <a href="/register">Create one now</a></p>
+            </div>
+        </div>
+
+        <div class="login-features">
+            <h3>Why use My CV Creator?</h3>
+            <ul>
+                <li>✓ Professional resume templates</li>
+                <li>✓ Easy-to-use form wizard</li>
+                <li>✓ Download as PDF instantly</li>
+                <li>✓ Edit anytime, anywhere</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<style>
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background-color: #fee;
+    border: 1px solid #fcc;
+    color: #c33;
+}
+</style>
+{% endblock %}

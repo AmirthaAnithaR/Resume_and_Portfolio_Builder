@@ -1,0 +1,408 @@
+{% extends "base.html" %}
+
+{% block title %}Choose Your Format - My CV Creator{% endblock %}
+
+{% block content %}
+<div class="choice-page">
+    <div class="choice-container">
+        <div class="choice-header">
+            <h1>Choose Your Format</h1>
+            <p>How would you like to showcase your professional profile?</p>
+        </div>
+
+        <div class="format-options">
+            <!-- Resume Option -->
+            <div class="format-card resume-card">
+                <div class="format-preview">
+                    <div class="preview-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="preview-mockup">
+                        <div class="mockup-header"></div>
+                        <div class="mockup-line"></div>
+                        <div class="mockup-line short"></div>
+                        <div class="mockup-section"></div>
+                        <div class="mockup-line"></div>
+                        <div class="mockup-line"></div>
+                    </div>
+                </div>
+                <div class="format-content">
+                    <h2>Traditional Resume</h2>
+                    <p>Professional PDF resume with clean templates perfect for job applications and ATS systems.</p>
+                    <ul class="format-features">
+                        <li>✓ ATS-friendly formats</li>
+                        <li>✓ 3 professional templates</li>
+                        <li>✓ PDF download ready</li>
+                        <li>✓ Print optimized</li>
+                        <li>✓ Traditional layout</li>
+                    </ul>
+                    <form method="POST" action="/choose-resume">
+                        <button type="submit" class="btn btn-primary">Create Resume</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Portfolio Option -->
+            <div class="format-card portfolio-card featured">
+                <div class="featured-badge">Recommended</div>
+                <div class="format-preview">
+                    <div class="preview-icon">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <div class="preview-mockup portfolio-mockup">
+                        <div class="mockup-nav">
+                            <span></span><span></span><span></span>
+                        </div>
+                        <div class="mockup-hero">
+                            <div class="hero-circle"></div>
+                            <div class="hero-text">
+                                <div class="hero-line"></div>
+                                <div class="hero-line short"></div>
+                            </div>
+                        </div>
+                        <div class="mockup-cards">
+                            <div class="card-item"></div>
+                            <div class="card-item"></div>
+                            <div class="card-item"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="format-content">
+                    <h2>Digital Portfolio</h2>
+                    <p>Modern, interactive portfolio website with animations and professional design to showcase your work online.</p>
+                    <ul class="format-features">
+                        <li>✓ Modern interactive design</li>
+                        <li>✓ Smooth animations</li>
+                        <li>✓ Mobile responsive</li>
+                        <li>✓ Project showcase</li>
+                        <li>✓ Contact form</li>
+                        <li>✓ Downloadable as PDF</li>
+                    </ul>
+                    <form method="POST" action="/choose-portfolio">
+                        <button type="submit" class="btn btn-primary btn-featured">Create Portfolio</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="choice-footer">
+            <p><strong>Need both?</strong> You can always create the other format later from your dashboard.</p>
+            <a href="/form" class="link-secondary">← Back to Edit Profile</a>
+        </div>
+    </div>
+</div>
+
+<style>
+.choice-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #2c5f7f 0%, #1a3c5e 100%);
+    display: flex;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.choice-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.choice-header {
+    text-align: center;
+    margin-bottom: 60px;
+    color: white;
+}
+
+.choice-header h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.choice-header p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.format-options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+.format-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.format-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+}
+
+.format-card.featured {
+    border: 3px solid #2c5f7f;
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.featured-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: #20c997;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.format-preview {
+    text-align: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.preview-icon {
+    font-size: 60px;
+    color: #2c5f7f;
+    margin-bottom: 20px;
+}
+
+.preview-mockup {
+    width: 200px;
+    height: 250px;
+    background: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.mockup-header {
+    width: 100%;
+    height: 20px;
+    background: #2c5f7f;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+.mockup-line {
+    width: 100%;
+    height: 8px;
+    background: #cbd5e1;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+
+.mockup-line.short {
+    width: 70%;
+}
+
+.mockup-section {
+    width: 100%;
+    height: 30px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    margin: 15px 0;
+}
+
+.portfolio-mockup {
+    background: #1f2937;
+}
+
+.mockup-nav {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.mockup-nav span {
+    width: 30px;
+    height: 4px;
+    background: #2c5f7f;
+    border-radius: 2px;
+}
+
+.mockup-hero {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.hero-circle {
+    width: 40px;
+    height: 40px;
+    background: #2c5f7f;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.hero-text {
+    flex: 1;
+}
+
+.hero-line {
+    width: 100%;
+    height: 6px;
+    background: #e5e7eb;
+    border-radius: 3px;
+    margin-bottom: 6px;
+}
+
+.hero-line.short {
+    width: 60%;
+}
+
+.mockup-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.card-item {
+    height: 30px;
+    background: #374151;
+    border-radius: 4px;
+}
+
+.format-content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: #1f2937;
+    margin-bottom: 15px;
+}
+
+.format-content p {
+    color: #6b7280;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.format-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.format-features li {
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.btn {
+    width: 100%;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+}
+
+.btn-primary {
+    background: #2c5f7f;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1a3c5e;
+    transform: translateY(-2px);
+}
+
+.btn-featured {
+    background: linear-gradient(135deg, #20c997 0%, #17a2b8 100%);
+    box-shadow: 0 10px 20px rgba(32, 201, 151, 0.3);
+}
+
+.btn-featured:hover {
+    background: linear-gradient(135deg, #1aa179 0%, #138496 100%);
+    box-shadow: 0 15px 30px rgba(32, 201, 151, 0.4);
+}
+
+.choice-footer {
+    text-align: center;
+    color: white;
+    margin-top: 40px;
+}
+
+.choice-footer p {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+}
+
+.link-secondary {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.link-secondary:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .choice-header h1 {
+        font-size: 2rem;
+    }
+    
+    .choice-header p {
+        font-size: 1.1rem;
+    }
+    
+    .format-options {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .format-card {
+        padding: 30px 20px;
+    }
+    
+    .preview-mockup {
+        width: 150px;
+        height: 200px;
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .choice-page {
+        padding: 20px 15px;
+    }
+    
+    .choice-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .format-card {
+        padding: 25px 15px;
+    }
+}
+</style>
+{% endblock %}

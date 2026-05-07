@@ -1,0 +1,247 @@
+/*
+ * print.css — Resume + Portfolio Builder
+ * ----------------------------------------
+ * Print / PDF stylesheet for professional resume templates
+ */
+
+@media print {
+  /* Hide non-resume elements */
+  .navbar,
+  .action-bar,
+  .portfolio-section,
+  .creative-portfolio,
+  .footer,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Page setup */
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #ffffff;
+  }
+
+  .resume-container {
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
+    border-radius: 0;
+  }
+
+  /* ===================================================================
+     TEMPLATE 1: BLACK & WHITE PROFESSIONAL
+     =================================================================== */
+  
+  .template1 {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .template1 .resume-header {
+    border-bottom: 3px solid #000000;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .template1 .resume-name {
+    font-size: 28pt;
+    color: #000000;
+    font-weight: 700;
+  }
+
+  .template1 .section-title {
+    font-size: 12pt;
+    color: #000000;
+    border-bottom: 2px solid #000000;
+    text-transform: uppercase;
+  }
+
+  /* ===================================================================
+     TEMPLATE 2: MINT GREEN TIMELINE
+     =================================================================== */
+  
+  .template2 {
+    background: linear-gradient(to right, #e8f5f0 0%, #e8f5f0 30%, #ffffff 30%, #ffffff 100%);
+    padding: 0;
+    page-break-inside: avoid;
+  }
+
+  .resume-header-mint {
+    position: relative;
+    padding: 2rem;
+    background: #ffffff;
+    page-break-inside: avoid;
+  }
+
+  .mint-accent {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 30%;
+    height: 150px;
+    background: #a8e6cf;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .template2 .resume-name {
+    font-size: 32pt;
+    color: #2c5f4f;
+    letter-spacing: 2px;
+  }
+
+  .job-title-badge {
+    background: #ffffff;
+    color: #5a9e7f;
+    border-bottom: 2px solid #5a9e7f;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .section-title-mint {
+    color: #5a9e7f;
+    border-bottom: 2px solid #5a9e7f;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .timeline-marker {
+    background: #5a9e7f;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .timeline-marker::before {
+    background: #5a9e7f;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .stars {
+    color: #5a9e7f;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ===================================================================
+     TEMPLATE 3: TEAL TWO-COLUMN
+     =================================================================== */
+  
+  .template3 {
+    background: #ffffff;
+    padding: 0;
+    page-break-inside: avoid;
+  }
+
+  .resume-header-teal {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    padding: 2rem;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+    page-break-inside: avoid;
+  }
+
+  .photo-circle {
+    width: 120px;
+    height: 120px;
+    background: #ffffff;
+    border: 4px solid #ffffff;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .resume-name-teal,
+  .resume-surname-teal {
+    color: #ffffff;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .job-title-teal {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .left-column-teal {
+    background: #f8f9fa;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .section-title-teal {
+    color: #17a2b8;
+    border-bottom: 3px solid #17a2b8;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .section-title-teal-right {
+    color: #17a2b8;
+    border-bottom: 3px solid #17a2b8;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  .experience-list li::before {
+    color: #17a2b8;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* ===================================================================
+     GENERAL PRINT STYLES
+     =================================================================== */
+
+  /* Prevent page breaks inside important sections */
+  .resume-header,
+  .resume-header-mint,
+  .resume-header-teal,
+  .timeline-item,
+  .experience-item-teal,
+  .education-item-teal {
+    page-break-inside: avoid;
+  }
+
+  /* Links */
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Ensure colors print correctly */
+  * {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+
+  /* Font sizes for print */
+  body {
+    font-size: 11pt;
+    line-height: 1.4;
+  }
+
+  h1 {
+    font-size: 28pt;
+  }
+
+  h2 {
+    font-size: 14pt;
+  }
+
+  h3 {
+    font-size: 12pt;
+  }
+
+  p, li {
+    font-size: 10pt;
+  }
+}
