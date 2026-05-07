@@ -1,5 +1,7 @@
 {
   "version": 2,
+  "buildCommand": "echo 'Build complete'",
+  "outputDirectory": "resume-portfolio-builder",
   "builds": [
     {
       "src": "resume-portfolio-builder/app.py",
